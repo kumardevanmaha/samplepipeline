@@ -1,7 +1,7 @@
 format_version: 2
 pipelines:
   Backend_CommitPhase:
-    group: SamplePipeline
+    group: SamplePipelineUpdated
     materials:
       backend:
         git: http://git-repo:3000/gogs/sample-pipeline-backend.git
