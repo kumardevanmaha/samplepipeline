@@ -4,40 +4,16 @@ pipelines:
     group: SamplePipeline
     materials:
       backend:
-        git: http://git-repo:3000/gogs/sample-pipeline-backend.git
+        git: https://github.com/kumardevanmaha/booksapp
         branch: master
-      CommitPhasePassed:
-        pipeline: Backend_CommitPhase
-        stage: Push_To_Registry
+     
     stages:
-      - Deploy:
+      - Build:
           clean_workspace: true
           jobs:
-            Docker_Compose_Up:
+            Java_Build:
               tasks:
                 - exec:
-                    run_if: passed
-                    command: /bin/bash
-                    arguments:
-                    - ./scripts/acceptance/docker-deploy.sh
-                    - Dev
-      - Check_Server_Up:
-          jobs:
-            Check_Server_Up:
-              tasks:
-                - exec:
-                    run_if: passed
-                    command: /bin/bash
-                    arguments:
-                    - ./scripts/acceptance/check-server-up.sh
-                    - Dev
-      - E2E_Tests:
-          jobs:
-            Run_E2E_Tests:
-              tasks:
-                - exec:
-                    run_if: passed
-                    command: /bin/bash
-                    arguments:
-                    - ./scripts/acceptance/e2e-tests.sh
-                    - Dev
+                    mvn compile
+                    mvn package
+                    
